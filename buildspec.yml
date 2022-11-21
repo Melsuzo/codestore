@@ -1,77 +1,18 @@
 version: 0.2
-     
-phases:
-  install:
-    on-failure: ABORT
-    runtime-versions:
-      runtime: version
-      runtime: version
-    commands:
-      - command
-      - command
-    finally:
-      - command
-      - command
-  pre_build:
-    
-    on-failure: ABORT
-    commands:
-      - command
-      - command
-    finally:
-      - command
-      - command
-  build:
-    
-    on-failure: ABORT
-    commands:
-      - command
-      - command
-    finally:
-      - command
-      - command
-  post_build:
-    
-    on-failure: ABORT 
-    commands:
-      - command
-      - command
-    finally:
-      - command
-      - command
-reports:
-  report-group-name-or-arn:
-    files:
-      - location
-      - location
-    base-directory: location
-    discard-paths: yes
-    file-format: report-format
-artifacts:
-  files:
-    - location
-    - location
-  name: artifact-name
-  discard-paths: yes
-  base-directory: location
-  exclude-paths: excluded paths
-  enable-symlinks: no
-  s3-prefix: prefix
-  secondary-artifacts:
-    artifactIdentifier:
-      files:
-        - location
-        - location
-      name: secondary-artifact-name
-      discard-paths: yes
-      base-directory: location
-    artifactIdentifier:
-      files:
-        - location
-        - location
-      discard-paths: yes
-      base-directory: location
-cache:
-  paths:
-    - path
-    - path
+os: linux
+files:
+  - source: /index.html
+    destination: /var/www/html/
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies
+      timeout: 300
+      runas: root
+    - location: scripts/start_server
+      timeout: 300
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop_server
+      timeout: 300
+      runas: root
+
